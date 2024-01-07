@@ -13,11 +13,11 @@ GameObject:
   - component: {fileID: 8124083522568795153}
   - component: {fileID: 7457713911788943802}
   - component: {fileID: -4986841525299448279}
-  - component: {fileID: 7457713911788943806}
   - component: {fileID: 7457713911788943798}
   - component: {fileID: -7627734984760175991}
   - component: {fileID: 6902776658012416563}
-  m_Layer: 0
+  - component: {fileID: -1906813683838711167}
+  m_Layer: 11
   m_Name: DiamondPickUp
   m_TagString: Pick Up
   m_Icon: {fileID: 0}
@@ -116,22 +116,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.33287996, y: 0.37048185, z: 0.28828257}
   m_Center: {x: 0, y: 0.18524092, z: 0}
---- !u!114 &7457713911788943806
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7763773218392806852}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 863a96061c283234eb139fbdd8b8f0c7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  degreesPerSecondX: 0
-  degreesPerSecondY: 25
-  degreesPerSecondZ: 0
-  rb: {fileID: 6902776658012416563}
 --- !u!114 &7457713911788943798
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -158,7 +142,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29fa6432eaa621b4ca7503479cadc6ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  launchOnStart: 0
 --- !u!54 &6902776658012416563
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -174,7 +157,23 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 1
   m_Constraints: 0
-  m_CollisionDetection: 2
+  m_CollisionDetection: 1
+--- !u!114 &-1906813683838711167
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7763773218392806852}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ef6fb41da297374eabd22e251dc3112, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  degreesPerSecondX: 0
+  degreesPerSecondY: -20
+  degreesPerSecondZ: 0
+  rb: {fileID: 6902776658012416563}
 --- !u!1001 &3088682686203922329
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -281,6 +280,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Sparkles
+      objectReference: {fileID: 0}
+    - target: {fileID: 7773575119857523277, guid: b219a797c643b9b40a06dc60d058b52e,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b219a797c643b9b40a06dc60d058b52e, type: 3}

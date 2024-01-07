@@ -4,7 +4,6 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Shootable
   - Pick Up
   - dont fucking touch damn it
   - death
@@ -20,7 +19,7 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Player
   - Water
   - UI
   - 
@@ -28,7 +27,7 @@ TagManager:
   - Lighting
   - Ground
   - Postprocessing
-  - 
+  - PickUp
   - 
   - 
   - 

@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour {
 	
-	//physics
+	//Physics
 	public float speed;
 	public float jump;
 
@@ -28,22 +28,26 @@ public class PlayerController : MonoBehaviour {
 	}
 	public bool isOnGround = true;
 
+	//VFX
 	public ParticleSystem boostFX;
 	public ParticleSystem pickUpFX;
 	public ParticleSystem hitVFX;
+	public ParticleSystem deathVFX;
 
+	//pickUp Count
 	public Text countText;
 	public int PickUpCount;
+	public int count;
 	public Text winText;
+
 	public Vector3 scaleChange;
 	public bool sizeIncreased = false;
-	public int count;
 
 	//powerUp
-	public GameObject powerupIndicator;
-	public int powerupTimer;
+	private GameObject powerupIndicator;
+	private int powerupTimer;
 	private bool hasPowerup;
-	public float speedBoost;
+	private float speedBoost;
 
 	private Rigidbody rb;
 
@@ -56,12 +60,13 @@ public class PlayerController : MonoBehaviour {
 
 	public AudioSource playerAudio;
 
+
 	// At the start of the game..
 	void Start ()
 	{
 		sizeIncreased = false;
 		PickUpCount = FindObjectsOfType<PickUp>().Length;
-		Debug.Log(PickUpCount);
+		Debug.Log(PickUpCount + " collectibles on this map");
 		rb = GetComponent<Rigidbody>();
 		count = 0;
 		transform.localScale = scaleChange;
@@ -77,8 +82,8 @@ public class PlayerController : MonoBehaviour {
 	void FixedUpdate ()
 	{
 		Movement();
-
-	}
+        SetCountText();
+    }
 
 	void Update()
 	{
@@ -89,10 +94,6 @@ public class PlayerController : MonoBehaviour {
 		}
 	}
 
-    void LateUpdate()
-    {
-		SetCountText();
-    }
 
 	//ABSTRACTION
 	void Movement() 
@@ -141,6 +142,8 @@ public class PlayerController : MonoBehaviour {
             collision.gameObject.SetActive(false);
 			sizeIncreased = true;
 			pickUpFX.Play();
+			count = count + 1;
+			SetCountText();
         }
 
 		//ENCAPSULATION
@@ -152,10 +155,11 @@ public class PlayerController : MonoBehaviour {
 				collision.gameObject.SetActive(false);
 				sizeIncreased = false;
 				pickUpFX.Play();
-                //count = count + 1;
-                //SetCountText();
+                count = count + 1;
+                SetCountText();
             }
 		}
+
         if (collision.gameObject.tag == "Destructible")
         {
             boostFX.Play();
@@ -185,8 +189,7 @@ public class PlayerController : MonoBehaviour {
 
 		if (collision.gameObject.tag == "death")
 		{
-			SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-			Debug.Log("Loading level...");
+			StartCoroutine(DeathDelay(4));
 		}
 
 	}
@@ -227,7 +230,6 @@ public class PlayerController : MonoBehaviour {
 	{
 		// Update the text field of our 'countText' variable
 		countText.text = "Count: " + count.ToString();
-		Debug.Log(count);
 
 		// Check if our 'count' is equal to or exceeded 12
 		if (count >= PickUpCount) 
@@ -236,6 +238,23 @@ public class PlayerController : MonoBehaviour {
 			winText.text = "LEVEL COMPLETE!";
 			Debug.Log("Level Complete");
 			winText.color = Color.Lerp(Color.red, Color.blue, Mathf.PingPong(Time.time, 1));
+			StartCoroutine(OutroDelay(5));
 		}
 	}
+
+	IEnumerator OutroDelay(float duration)
+	{
+		yield return new WaitForSeconds(duration);
+		int buildIndex = SceneManager.GetActiveScene().buildIndex;
+		SceneManager.LoadScene(buildIndex + 1);
+	}
+
+    IEnumerator DeathDelay(float duration)
+    {
+		deathVFX.Play();
+        yield return new WaitForSeconds(duration);
+        Debug.Log("Loading level...");
+        int buildIndex = SceneManager.GetActiveScene().buildIndex;
+        SceneManager.LoadScene(buildIndex);
+    }
 }

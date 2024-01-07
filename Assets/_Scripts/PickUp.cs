@@ -6,8 +6,24 @@ public class PickUp : MonoBehaviour
 {
     [SerializeField] private BoxCollider collectibleCollider;
     [SerializeField] private BoxCollider physicsCollider;
-    private PlayerController player;
-    private float counter;
+    private float counter = 0.33f;
+    private float m_MaxCount;
+    //ENCAPSULATION
+    public float maxCount
+    {
+        get { return m_MaxCount; }
+        set 
+        {
+            if (value < 0.0f)
+            {
+                Debug.Log("Negative time values not allowed.");
+            }
+            else
+            {
+                m_MaxCount = value;
+            }
+        }
+    }
     void Awake()
     {
         collectibleCollider.enabled = false;
@@ -15,12 +31,13 @@ public class PickUp : MonoBehaviour
 
     void Start()
     {
-        Physics.IgnoreCollision(physicsCollider, player.GetComponent<Collider>());
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        Physics.IgnoreCollision(physicsCollider, player.GetComponent<Collider>(), true);
     }
 
     void Update()
     {
-        if (collectibleCollider != null && counter > 0.33f)
+        if (collectibleCollider != null && counter > maxCount)
         {
             collectibleCollider.enabled = true;
         }
