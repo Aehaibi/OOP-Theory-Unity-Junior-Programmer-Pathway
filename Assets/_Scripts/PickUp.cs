@@ -6,8 +6,8 @@ public class PickUp : MonoBehaviour
 {
     [SerializeField] private BoxCollider collectibleCollider;
     [SerializeField] private BoxCollider physicsCollider;
-    private float counter = 0.33f;
-    private float m_MaxCount;
+    private float counter;
+    private float m_MaxCount = 0.33f;
     //ENCAPSULATION
     public float maxCount
     {
